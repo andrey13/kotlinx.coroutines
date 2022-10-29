@@ -2,14 +2,14 @@
 
 [//]: # (title: Asynchronous Flow)
 
-A suspending function asynchronously returns a single value, but how can we return
-multiple asynchronously computed values? This is where Kotlin Flows come in.
+Функция приостановки асинхронно возвращает одно значение, но как мы можем вернуть
+несколько асинхронно вычисляемых значений? Здесь на помощь приходят Kotlin Flows.
 
 ## Representing multiple values
 
-Multiple values can be represented in Kotlin using [collections]. 
-For example, we can have a `simple` function that returns a [List] 
-of three numbers and then print them all using [forEach]:
+Несколько значений могут быть представлены в Kotlin с помощью [collections]. 
+Например, у нас может быть `simple` функция, которая возвращает [List] 
+из трех чисел, а затем вывести их все, используя [forEach]:
 
 ```kotlin
 fun simple(): List<Int> = listOf(1, 2, 3)
