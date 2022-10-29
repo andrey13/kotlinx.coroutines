@@ -5,7 +5,7 @@
 Функция приостановки асинхронно возвращает одно значение, но как мы можем вернуть
 несколько асинхронно вычисляемых значений? Здесь на помощь приходят Kotlin Flows.
 
-## Representing multiple values
+## Представление нескольких значений
 
 Несколько значений могут быть представлены в Kotlin с помощью [collections]. 
 Например, у нас может быть `simple` функция, которая возвращает [List] 
@@ -20,11 +20,11 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-> You can get the full code from [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-01.kt).
+> Вы можете получить полный код от [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-01.kt).
 >
 {type="note"}
 
-This code outputs:
+Этот код выводит:
 
 ```text
 1
@@ -34,10 +34,10 @@ This code outputs:
 
 <!--- TEST -->
 
-### Sequences
+### Последовательности
 
-If we are computing the numbers with some CPU-consuming blocking code 
-(each computation taking 100ms), then we can represent the numbers using a [Sequence]:
+Если мы вычисляем числа с некоторым блокирующим кодом, потребляющим ресурсы ЦП,
+(каждое вычисление занимает 100 мс), то мы можем представить числа, используя [Sequence]:
 
 ```kotlin
 fun simple(): Sequence<Int> = sequence { // sequence builder
@@ -53,11 +53,11 @@ fun main() {
 ```
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-> You can get the full code from [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-02.kt).
+> Вы можете получить полный код от [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-02.kt).
 >
 {type="note"}
 
-This code outputs the same numbers, but it waits 100ms before printing each one.
+Этот код выводит одни и те же числа, но ждет 100 мс перед печатью каждого из них.
 
 <!--- TEST 
 1
@@ -65,18 +65,18 @@ This code outputs the same numbers, but it waits 100ms before printing each one.
 3
 -->
 
-### Suspending functions
+### Приостановка функций
 
-However, this computation blocks the main thread that is running the code. 
-When these values are computed by asynchronous code we can mark the `simple` function with a `suspend` modifier,
-so that it can perform its work without blocking and return the result as a list:
+Однако это вычисление блокирует основной поток, в котором выполняется код.
+Когда эти значения вычисляются асинхронным кодом, мы можем пометить функцию simple() модификатором «suspend»,
+чтобы он мог выполнять свою работу без блокировки и возвращать результат в виде списка:
 
 ```kotlin
 import kotlinx.coroutines.*                 
                            
 //sampleStart
 suspend fun simple(): List<Int> {
-    delay(1000) // pretend we are doing something asynchronous here
+    delay(1000) // притворимся, что мы делаем что-то асинхронное здесь
     return listOf(1, 2, 3)
 }
 
@@ -87,11 +87,11 @@ fun main() = runBlocking<Unit> {
 ```  
 {kotlin-runnable="true" kotlin-min-compiler-version="1.3"}
 
-> You can get the full code from [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-03.kt).
+> Вы можете получить полный код от [here](../../kotlinx-coroutines-core/jvm/test/guide/example-flow-03.kt).
 >
 {type="note"}
 
-This code prints the numbers after waiting for a second.
+Этот код печатает числа после ожидания в течение секунды.
 
 <!--- TEST 
 1
@@ -99,10 +99,10 @@ This code prints the numbers after waiting for a second.
 3
 -->
 
-### Flows
+### Потоки
 
-Using the `List<Int>` result type, means we can only return all the values at once. To represent
-the stream of values that are being computed asynchronously, we can use a [`Flow<Int>`][Flow] type just like we would use a `Sequence<Int>` type for synchronously computed values:
+Использование типа результата `List<Int>` означает, что мы можем вернуть только все значения одновременно. Представлять
+поток значений, которые вычисляются асинхронно, мы можем использовать тип [`Flow<Int>`][Flow] так же, как мы использовали бы тип `Sequence<Int>` для синхронно вычисляемых значений:
 
 ```kotlin
 import kotlinx.coroutines.*
